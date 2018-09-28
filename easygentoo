@@ -358,10 +358,6 @@ download() {
     download_status=""
     request="${1}"
 
-    while true
-    do
-        shut
-
         case ${request} in
         latest)
             lnk="${tarballurl}/${lt}"; arg=""
@@ -400,21 +396,6 @@ download() {
             fi
         fi
 
-        # case $? in
-        # 0)
-        #     download_status="OK"; break
-        # ;;
-        # *)
-        #     echo; er "  We are having trouble downloading from current mirror."
-        #     echo; er "  Switching to another mirror..."; echo; sleep 1s
-        #     mirror_check "switch"
-        # ;;
-        # esac
-
-        sleep 5s
-    done
-
-    [[ -e "abortmission.eg" ]] && { echo; er "There are no available mirrors or setup was cancelled."; er "Exiting..."; echo; exit 1; }
 }
 
 download2() {
