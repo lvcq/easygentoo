@@ -382,19 +382,7 @@ download() {
         # determines base filename to use as a "save as" parameter in wget
         bname="$(basename $(echo ${lnk} | sed -e 's:^.*\:\/\/::' -e 's: .*::'))"
         echo ${lnk}
-        if [ -n "${arg}" ]; then
-            if [ "${blimit}" -gt "0" ]; then
-                wget --timeout=15 --tries=2 --waitretry=5 ${lnk} -O ${bname}
-            else
-                wget --timeout=15 --tries=2 --waitretry=5 ${lnk} -O ${bname}
-            fi
-        else
-            if [ "${blimit}" -gt "0" ]; then
-                wget --timeout=15 --tries=2 --waitretry=5 ${lnk} -O ${bname} &>/dev/null
-            else
-                wget --timeout=15 --tries=2 --waitretry=5 ${lnk} -O ${bname} &>/dev/null
-            fi
-        fi
+        wget ${lnk} -O ${bname}
 
 }
 
