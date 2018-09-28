@@ -208,69 +208,69 @@ net_guard() {
 }
 
 mirror_check() {
-    case ${1} in
-    switch)
-        newmirrorlist="$(echo ${mirrorlist} | cut -d' ' -f2-) $(echo ${mirrorlist} | cut -d' ' -f1)"
-        newmirror="$(echo ${mirrorlist} | cut -d' ' -f1)"
+    # case ${1} in
+    # switch)
+    #     newmirrorlist="$(echo ${mirrorlist} | cut -d' ' -f2-) $(echo ${mirrorlist} | cut -d' ' -f1)"
+    #     newmirror="$(echo ${mirrorlist} | cut -d' ' -f1)"
 
-        sed -i '\!^export mirrorlist=!d' ${vl}
-        sed -i '\!^export mirror=!d' ${vl}
+    #     sed -i '\!^export mirrorlist=!d' ${vl}
+    #     sed -i '\!^export mirror=!d' ${vl}
 
-        a2v "mirrorlist=\"${newmirrorlist}\""
-        a2v "mirror=\"${newmirror}\""
-    ;;
-    *)
-        if [ -e "connected.eg" ]; then
-            stat_file="download_times.eg"
-            test_file="CX2.zip"
-            #~ test_file="amarachthemepack.zip"
-            test_file_target="distfiles/${test_file}"
+    #     a2v "mirrorlist=\"${newmirrorlist}\""
+    #     a2v "mirror=\"${newmirror}\""
+    # ;;
+    # *)
+    #     if [ -e "connected.eg" ]; then
+    #         stat_file="download_times.eg"
+    #         test_file="CX2.zip"
+    #         #~ test_file="amarachthemepack.zip"
+    #         test_file_target="distfiles/${test_file}"
 
-            rm -rf ${test_file}
-            touch ${stat_file}
+    #         rm -rf ${test_file}
+    #         touch ${stat_file}
 
-            eb2 "* "; eg "Testing Gentoo mirrors..."; sleep 0.5s
+    #         eb2 "* "; eg "Testing Gentoo mirrors..."; sleep 0.5s
 
-            mirrorlist="http://mirrors.163.com/gentoo/"
-            mno="1"
-            for mrr in ${mirrorlist}
-            do
-                (( mno < 10 )) && { er2 "      ${mno}- "; eb "${mrr}"; } || { er2 "     ${mno}- "; eb "${mrr}"; }
+    #         mirrorlist="http://mirrors.163.com/gentoo/"
+    #         mno="1"
+    #         for mrr in ${mirrorlist}
+    #         do
+    #             (( mno < 10 )) && { er2 "      ${mno}- "; eb "${mrr}"; } || { er2 "     ${mno}- "; eb "${mrr}"; }
 
-                read info1 info2 <<< "$( { time -p download2 ${mrr}${test_file_target}; } 2>&1 | grep real )"
-                [[ -e "download.done" ]] && echo "${info2} ${mrr}" >> ${stat_file}
+    #             read info1 info2 <<< "$( { time -p download2 ${mrr}${test_file_target}; } 2>&1 | grep real )"
+    #             [[ -e "download.done" ]] && echo "${info2} ${mrr}" >> ${stat_file}
 
-                rm -rf ${test_file}
+    #             rm -rf ${test_file}
 
-                ((mno++))
-            done
-            unset mno
+    #             ((mno++))
+    #         done
+    #         unset mno
 
-            echo; ey "  Choosing 5 fastest mirrors..."; sleep 0.5s
+    #         echo; ey "  Choosing 5 fastest mirrors..."; sleep 0.5s
 
-        #     while read info3 info4
-        #     do
-        #         if [ -n "${info4}" ]; then
-        #             if [ -z "${fastest_mirrors}" ]; then
-        #                 fastest_mirrors="${info4}"
-        #                 first_mirror="${info4}"
-        #             else
-        #                 fastest_mirrors="${fastest_mirrors} ${info4}"
-        #             fi
-        #         fi
-        #     done <<< "$(sort -n ${stat_file} | sed 5q)"
+    #     #     while read info3 info4
+    #     #     do
+    #     #         if [ -n "${info4}" ]; then
+    #     #             if [ -z "${fastest_mirrors}" ]; then
+    #     #                 fastest_mirrors="${info4}"
+    #     #                 first_mirror="${info4}"
+    #     #             else
+    #     #                 fastest_mirrors="${fastest_mirrors} ${info4}"
+    #     #             fi
+    #     #         fi
+    #     #     done <<< "$(sort -n ${stat_file} | sed 5q)"
 
-        #     sed -i '\!^export mirrorlist=!d' ${vl}
-        #     sed -i '\!^export mirror=!d' ${vl}
-        #     sed -i '\!^export ping_target=!d' ${vl}
+    #     #     sed -i '\!^export mirrorlist=!d' ${vl}
+    #     #     sed -i '\!^export mirror=!d' ${vl}
+    #     #     sed -i '\!^export ping_target=!d' ${vl}
 
-        #     a2v "mirrorlist=\"${fastest_mirrors}\""
-        #     a2v "mirror=\"${first_mirror}\""
-        #     # Trimming mirror name. Ex. http://gentoo.kiev.ua/ftp -->> gentoo.kiev.ua
-        #     a2v "ping_target=\"$(echo ${mirror} | sed -e 's/.*\:\/\///' -e 's/\/.*$//')\""
-        # fi
-    ;;
-    esac
+    #     #     a2v "mirrorlist=\"${fastest_mirrors}\""
+    #     #     a2v "mirror=\"${first_mirror}\""
+    #     #     # Trimming mirror name. Ex. http://gentoo.kiev.ua/ftp -->> gentoo.kiev.ua
+    #     #     a2v "ping_target=\"$(echo ${mirror} | sed -e 's/.*\:\/\///' -e 's/\/.*$//')\""
+    #     # fi
+    # ;;
+    # esac
 
     case ${arch} in
     i686)
